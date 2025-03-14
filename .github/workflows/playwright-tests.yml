@@ -8,12 +8,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to latest version
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5  # Updated to latest version
         with:
-          python-version: "3.10.13"
+          python-version: "3.10.13"  # Consider upgrading to 3.11 or 3.12
 
       - name: Install Playwright dependencies
         run: |
@@ -24,11 +24,12 @@ jobs:
         run: playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: pytest tests --maxfail=1 --disable-warnings --html=reports/playwright-report.html --self-contained-html # Change to --headless if running in CI mode
+        run: pytest tests --maxfail=1 --disable-warnings --headless --html=reports/playwright-report.html --self-contained-html
+        # Added --headless for CI compatibility
 
       - name: Upload Playwright Test Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-test-report
-          path: test-results.html  # Adjust if using a different report format
+          path: reports/playwright-report.html  # Fixed to match the generated report path
