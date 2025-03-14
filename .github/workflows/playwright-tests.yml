@@ -24,7 +24,7 @@ jobs:
         run: playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: pytest tests  # Change to --headless if running in CI mode
+        run: pytest tests --html=reports/playwright-report.html --self-contained-html # Change to --headless if running in CI mode
 
       - name: Upload Playwright Test Report
         if: always()
