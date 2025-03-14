@@ -24,7 +24,7 @@ jobs:
         run: playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: pytest tests --maxfail=1 --disable-warnings --headless --html=reports/playwright-report.html --self-contained-html
+        run: pytest tests --maxfail=1 --disable-warnings --html=reports/playwright-report.html --self-contained-html
         # Added --headless for CI compatibility
 
       - name: Upload Playwright Test Report
