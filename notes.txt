@@ -13,6 +13,10 @@ PLAYWRIGHT-PYTHON-TESTS/
 │── .gitignore             # Ignore unnecessary files
 │── README.md              # Project documentation
 
+	•	Fixtures (@pytest.fixture) for reusability
+	•	Parametrization (@pytest.mark.parametrize) to test multiple cases
+	•	Setup & teardown methods (conftest.py)
+
 
 - Instead of writing locators inside test files, we create a Page Object Model (POM).
 	•	Keeps tests clean and readable.
