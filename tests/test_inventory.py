@@ -33,5 +33,4 @@ def test_open_cart(page: Page):
 
     inventory_page = InventoryPage(page)
     inventory_page.open_cart()
-
     expect(page.locator("[data-test=\"title\"]")).to_contain_text("Your Cart")

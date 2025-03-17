@@ -24,6 +24,8 @@ PLAYWRIGHT-PYTHON-TESTS/
         Keeps test scripts clean – No need to repeat locators in every test.
         Increases maintainability – If a button’s locator changes, update it in one place.
         Makes test cases readable – Test scripts only contain logic, not detailed locators.
+		Reduce duplicate code in test files
+		Ensures easy updates if the UI changes
 
 - Refactor Test to Use LoginPage (test_login.py)
 	•	Uses LoginPage class for better code structure.
