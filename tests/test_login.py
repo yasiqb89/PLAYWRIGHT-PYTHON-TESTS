@@ -9,3 +9,5 @@ def test_valid_login(page: Page):
     
     # Validate login success
     expect(page.locator("[data-test=\"primary-header\"]")).to_contain_text("Swag Labs")
+
+
