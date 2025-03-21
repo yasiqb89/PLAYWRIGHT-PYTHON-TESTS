@@ -9,15 +9,17 @@ class InventoryPage:
         self.add_to_cart = page.locator("[data-test=\"add-to-cart-sauce-labs-backpack\"]")
         self.cart_button = page.locator("[data-test=\"shopping-cart-link\"]")
         self.remove_from_cart = page.locator("[data-test=\"remove-sauce-labs-backpack\"]")
-
         self.cart_badge = page.locator("[data-test='shopping-cart-badge']") 
+
         self.add_backpack = page.locator("[data-test='add-to-cart-sauce-labs-backpack']")
         self.add_bike_light = page.locator("[data-test='add-to-cart-sauce-labs-bike-light']")
-        
         self.remove_backpack = page.locator("[data-test='remove-sauce-labs-backpack']")
         self.remove_bike_light = page.locator("[data-test='remove-sauce-labs-bike-light']")
-
         self.item_prices = page.locator(".inventory_item_price") # Get common price locator using inspect element
+
+        self.sort_dropdown = page.locator("[data-test=\"product-sort-container\"]")
+        self.product_names = page.locator(".inventory_item_name")
+
 
 
     def add_item_to_cart(self):
@@ -46,3 +48,16 @@ class InventoryPage:
         prices = self.item_prices.all_inner_texts()
         total_price = sum(float(price.replace("$", "")) for price in prices)
         return total_price
+    
+    def sort_products(self, option: str):
+        "selects a sorting option from the dropdown"
+        self.sort_dropdown.select_option(option)
+
+    def get_product_names(self):
+        "Returns a list of all product names"
+        return self.product_names.all_inner_texts()
+    
+    def get_product_prices(self):
+        "Returns a list of product prices in float"
+        prices = self.item_prices.all_inner_texts()
+        return [float(price.replace("$", "")) for price in prices]

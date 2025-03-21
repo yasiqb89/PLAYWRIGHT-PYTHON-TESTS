@@ -70,3 +70,37 @@ def test_cart_persistence_after_navigation(page: Page):
     page.goto("https://www.saucedemo.com/cart.html")
 
     expect(inventory_page.cart_badge).to_have_text("1")
+
+
+@pytest.mark.parametrize("sort_option, expected_order",[
+    ("az", True), # Name A -> Z
+    ("za", False), # Name Z -> A
+])
+def test_sort_by_name(page: Page, sort_option, expected_order):
+    "Test sorting products by name"
+    page.goto("https://www.saucedemo.com/")
+    login_page = LoginPage(page)
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(page)
+    inventory_page.sort_products(sort_option) #Selects "az" or "za"
+
+    product_names = inventory_page.get_product_names()
+    assert product_names == sorted(product_names, reverse=not expected_order), f"Sorting failed for {sort_option}"
+
+
+@pytest.mark.parametrize("sort_option, expected_order",[
+    ("lohi", True), # price low -> high
+    ("hilo", False), # price high -> low
+])
+def test_sort_by_price(page: Page, sort_option, expected_order):
+    "Test sorting products by price"
+    page.goto("https://www.saucedemo.com/")
+    login_page = LoginPage(page)
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(page)
+    inventory_page.sort_products(sort_option) #Selects "lohi" or "hilo"
+
+    product_prices = inventory_page.get_product_prices()
+    assert product_prices == sorted(product_prices, reverse=not expected_order), f"Sorting failed for {sort_option}"
