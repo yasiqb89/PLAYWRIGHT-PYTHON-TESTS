@@ -20,7 +20,14 @@ class InventoryPage:
         self.sort_dropdown = page.locator("[data-test=\"product-sort-container\"]")
         self.product_names = page.locator(".inventory_item_name")
 
+        #simulating filtering by selecting a product (locators for method)
+        self.first_product_name = page.locator(".inventory_item_name").first # First product
+        self.first_product_price = page.locator(".inventory_item_price").first # First product price 
+        self.first_product_desc = page.locator(".inventory_item_desc").first # First product description 
 
+    def click_first_product(self):
+        "Click first product on the page"
+        self.first_product_name.click()
 
     def add_item_to_cart(self):
         "Adds product to cart"

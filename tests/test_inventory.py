@@ -4,6 +4,31 @@ from tests.pages.inventory_page import InventoryPage
 from tests.pages.checkout_page import CheckoutPage
 from playwright.sync_api import Page, expect
 
+
+def test_product_detail(page: Page):
+    """When a user clicks a product (e.g. “Sauce Labs Backpack”),
+    they are navigated to the correct product page, and the details (name, price, description) match"""
+    page.goto("https://www.saucedemo.com/")
+    login_page = LoginPage(page)
+    login_page.login("standard_user", "secret_sauce")
+    
+    inventory_page = InventoryPage(page)
+    
+    # Get product data
+    expected_name = inventory_page.first_product_name.inner_text()
+    expected_price = inventory_page.first_product_price.inner_text()
+    expected_desc = inventory_page.first_product_desc.inner_text()
+    
+    inventory_page.click_first_product()
+    actual_name = page.locator(".inventory_details_name").inner_text()
+    actual_price = page.locator(".inventory_details_price").inner_text()
+    actual_desc = page.locator(".inventory_details_desc").inner_text()
+
+    assert actual_name == expected_name
+    assert actual_price == expected_price
+    assert actual_desc == expected_desc
+
+
 def test_add_item_to_cart(page: Page):
     "Testing adding an item to the cart"
     page.goto("https://www.saucedemo.com/")
@@ -104,3 +129,5 @@ def test_sort_by_price(page: Page, sort_option, expected_order):
 
     product_prices = inventory_page.get_product_prices()
     assert product_prices == sorted(product_prices, reverse=not expected_order), f"Sorting failed for {sort_option}"
+
+
