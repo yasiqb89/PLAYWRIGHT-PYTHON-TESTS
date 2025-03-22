@@ -28,6 +28,7 @@ class InventoryPage:
     def click_first_product(self):
         "Click first product on the page"
         self.first_product_name.click()
+        # self.product_names.nth(index).click()
 
     def add_item_to_cart(self):
         "Adds product to cart"
