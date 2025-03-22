@@ -15,3 +15,4 @@ class LoginPage:
 
     def get_error_text(self):
         return self.error_message.inner_text()
+    
