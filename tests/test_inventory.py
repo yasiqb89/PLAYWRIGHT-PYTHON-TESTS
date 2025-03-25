@@ -2,6 +2,7 @@ import pytest
 from tests.pages.login_page import LoginPage
 from tests.pages.inventory_page import InventoryPage
 from tests.pages.checkout_page import CheckoutPage
+from tests.pages.navigation_page import NavigationPage
 from playwright.sync_api import Page, expect
 
 
@@ -130,4 +131,25 @@ def test_sort_by_price(page: Page, sort_option, expected_order):
     product_prices = inventory_page.get_product_prices()
     assert product_prices == sorted(product_prices, reverse=not expected_order), f"Sorting failed for {sort_option}"
 
+@pytest.mark.xfail(reason= "Cart is not cleared after logout — Cart should remember items for same user")
+def test_cart_clears_after_logout(page: Page):
+    page.goto("https://www.saucedemo.com/")
+    login_page = LoginPage(page)
+    login_page.login("standard_user", "secret_sauce")
 
+    inventory_page = InventoryPage(page)
+    inventory_page.add_to_cart.click()     
+    inventory_page.cart_button.click()  
+
+    # Validate item is in cart
+    expect(inventory_page.cart_badge).to_have_count(1)
+
+    navigation_page = NavigationPage(page)
+    navigation_page.logout()
+
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page.cart_button.click()
+
+    # Validate cart is empty, Should fail if same user logs back in
+    expect(inventory_page.cart_badge).to_have_count(0)

@@ -13,6 +13,7 @@ class CheckoutPage:
         self.continue_button = page.locator("[data-test=\"continue\"]")   
         self.finish_button = page.locator("[data-test=\"finish\"]")
         self.order_success_message = page.locator("[data-test=\"complete-header\"]")
+        self.error_message = page.locator("[data-test='error']")
     
     def proceed_to_checkout(self):
         "Using inventory page cart button this time instead of defining again for a different approach"
@@ -30,6 +31,9 @@ class CheckoutPage:
         "Complete checkout"
         self.finish_button.click()
 
+    def get_error_text(self):
+        return self.error_message.inner_text()
+    
 
     
 
