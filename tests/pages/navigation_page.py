@@ -11,6 +11,7 @@ class NavigationPage:
         self.about_link = page.locator("[data-test=\"about-sidebar-link\"]")
         self.cart_button = page.locator("[data-test=\"shopping-cart-link\"]")
         self.logout_link = page.locator("[data-test=\"logout-sidebar-link\"]")
+        self.back_to_products_button = page.locator("[data-test='back-to-products']")
     
     def open_menu(self):
         "Opens sidebar menu"
